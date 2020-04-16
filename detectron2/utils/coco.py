@@ -125,11 +125,9 @@ class Data2Coco(object):
         return data_coco
 
     def save_json(self):
-        print("save coco json")
         self.data_transfer()
         self.data_coco = self.data2coco()
 
-        print(self.save_json_path)
         os.makedirs(
             os.path.dirname(os.path.abspath(self.save_json_path)), exist_ok=True
         )
