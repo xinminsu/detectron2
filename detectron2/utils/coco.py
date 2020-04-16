@@ -44,7 +44,7 @@ class Data2Coco(object):
         image["height"] = height
         image["width"] = width
         image["id"] = num
-        image["file_name"] = self.file_name
+        image["file_name"] = os.path.basename(self.file_name)
 
         self.height = height
         self.width = width
