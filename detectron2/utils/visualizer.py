@@ -1442,7 +1442,7 @@ class Visualizer2:
             if masks is not None:
                 labelsp = labels[i].split()
                 label = '_'.join(labelsp[:-1])
-                self.data2coco.add_annotation(self.data2coco.annotation(masks[i].polygons, label, i))
+                self.data2coco.add_annotation(self.data2coco.annotation(masks[i].polygons, label, 0))
                 self.data2coco.annID += 1
                 for segment in masks[i].polygons:
                     self.draw_polygon(segment.reshape(-1, 2), color, alpha=alpha)
