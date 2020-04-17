@@ -54,9 +54,9 @@ class Data2Coco(object):
     def category(self, label):
         labelsp = label.split()
         category = {}
-        category["supercategory"] = labelsp[:-1]
+        category["supercategory"] = '_'.join(labelsp[:-1])
         category["id"] = len(self.categories)
-        category["name"] = labelsp[:-1]
+        category["name"] = '_'.join(labelsp[:-1])
         return category
 
     def annotation(self, polygons, label, num):
@@ -75,7 +75,7 @@ class Data2Coco(object):
         annotation["bbox"] = list(map(float, self.getbbox(points)))
 
         labelsp = label.split()
-        annotation["category_id"] = labelsp[:-1]  # self.getcatid(label)
+        annotation["category_id"] = '_'.join(labelsp[:-1])  # self.getcatid(label)
         annotation["id"] = self.annID
         return annotation
 
