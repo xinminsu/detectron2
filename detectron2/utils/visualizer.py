@@ -1157,7 +1157,7 @@ class Visualizer2:
             np.sqrt(self.output.height * self.output.width) // 90, 10 // scale
         )
         self._instance_mode = instance_mode
-        self.data2coco = Data2Coco(self.file_name, cimage["cocoOutput"])
+        self.data2coco = Data2Coco(self.file_name, self.file_name.split(".")[0]+".json")
         self.data2coco.add_image(self.data2coco.image(img_rgb, 0))
 
     def draw_instance_predictions(self, predictions):

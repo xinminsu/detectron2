@@ -65,9 +65,6 @@ def get_parser():
         default=[],
         nargs=argparse.REMAINDER,
     )
-    parser.add_argument(
-        "--output_coco", help="Output json file path.", default="trainval.json"
-    )
     return parser
 
 if __name__ == "__main__":
@@ -93,7 +90,6 @@ if __name__ == "__main__":
             cimage = {}
             cimage["imagePath"] = path
             cimage["image"] = img
-            cimage["cocoOutput"] = args.output_coco
             predictions, visualized_output = demo.run_on_image2(cimage)
             logger.info(
                 "{}: {} in {:.2f}s".format(
@@ -116,8 +112,8 @@ if __name__ == "__main__":
             else:
                 cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
                 cv2.imshow(WINDOW_NAME, visualized_output.get_image()[:, :, ::-1])
-                if cv2.waitKey(0) == 27:
-                    break  # esc to quit
+                #if cv2.waitKey(0) == 27:
+                #    break  # esc to quit
     elif args.webcam:
         assert args.input is None, "Cannot have both --input and --webcam!"
         cam = cv2.VideoCapture(0)

@@ -133,4 +133,5 @@ class Data2Coco(object):
         os.makedirs(
             os.path.dirname(os.path.abspath(self.save_json_path)), exist_ok=True
         )
-        json.dump(self.data_coco, open(self.save_json_path, "w"), indent=4)
+        #json.dump(self.data_coco, open(self.save_json_path, "w"), indent=4)
+        json.dump(self.data_coco, open(self.save_json_path, "w"), separators=(',', ':'))
