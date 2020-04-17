@@ -73,7 +73,8 @@ class Data2Coco(object):
 
         annotation["bbox"] = list(map(float, self.getbbox(points)))
 
-        annotation["category_id"] = label[0]  # self.getcatid(label)
+        labels = label.split()
+        annotation["category_id"] = labels[:-1]  # self.getcatid(label)
         annotation["id"] = self.annID
         return annotation
 
