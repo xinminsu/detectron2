@@ -1440,14 +1440,17 @@ class Visualizer2:
                 self.draw_box(boxes[i], edge_color=color)
 
             if masks is not None:
-                self.data2coco.add_annotation(self.data2coco.annotation(masks[i].polygons, labels[i], i))
+                labelsp = labels[i].split()
+                label = '_'.join(labelsp[:-1])
+                self.data2coco.add_annotation(self.data2coco.annotation(masks[i].polygons, label, i))
                 self.data2coco.annID += 1
                 for segment in masks[i].polygons:
                     self.draw_polygon(segment.reshape(-1, 2), color, alpha=alpha)
 
             if labels is not None:
-                if labels[i] not in self.data2coco.label:
-                    self.data2coco.add_label(labels[i])
+                labelsp = labels[i].split()
+                label = '_'.join(labelsp[:-1])
+                self.data2coco.add_label(label)
                 # first get a box
                 if boxes is not None:
                     x0, y0, x1, y1 = boxes[i]

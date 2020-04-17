@@ -15,15 +15,15 @@ class Data2Coco(object):
         self.images = []
         self.categories = []
         self.annotations = []
-        self.label = []
+        self.labels = []
         self.annID = 1
         self.height = 0
         self.width = 0
 
     def data_transfer(self):
         # Sort all text labels so they are in the same order across data splits.
-        self.label.sort()
-        for label in self.label:
+        self.labels.sort()
+        for label in self.labels:
             self.categories.append(self.category(label))
         for annotation in self.annotations:
             annotation["category_id"] = self.getcatid(annotation["category_id"])
@@ -32,7 +32,8 @@ class Data2Coco(object):
         self.images.append(image)
 
     def add_label(self, label):
-        self.label.append(label)
+        if label not in self.labels:
+            self.labels.append(label)
 
     def add_annotation(self, annotation):
         self.annotations.append(annotation)
@@ -52,13 +53,10 @@ class Data2Coco(object):
         return image
 
     def category(self, label):
-        labelsp = label.split()
         category = {}
-        category["supercategory"] = '_'.join(labelsp[:-1])
-        #category["supercategory"] = '_'.join(labelsp)[:-1]
+        category["supercategory"] = label
         category["id"] = len(self.categories)
-        category["name"] = '_'.join(labelsp[:-1])
-        #category["name"] = '_'.join(labelsp)[:-1]
+        category["name"] = label
         return category
 
     def annotation(self, polygons, label, num):
@@ -76,9 +74,7 @@ class Data2Coco(object):
 
         annotation["bbox"] = list(map(float, self.getbbox(points)))
 
-        labelsp = label.split()
-        #annotation["category_id"] = '_'.join(labelsp[:-1])  # self.getcatid(label)
-        annotation["category_id"] = '_'.join(labelsp)[:-1]
+        annotation["category_id"] = label  # self.getcatid(label)
         annotation["id"] = self.annID
         return annotation
 
