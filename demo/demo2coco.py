@@ -90,7 +90,7 @@ if __name__ == "__main__":
             cimage = {}
             cimage["imagePath"] = path
             cimage["image"] = img
-            predictions, visualized_output = demo.run_on_image2(cimage)
+            predictions, visualized_output = demo.run_on_image3(cimage)
             logger.info(
                 "{}: {} in {:.2f}s".format(
                     path,
