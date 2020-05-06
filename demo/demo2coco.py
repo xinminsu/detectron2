@@ -7,7 +7,6 @@ import time
 import cv2
 import tqdm
 
-
 from detectron2.config import get_cfg
 from detectron2.data.detection_utils import read_image
 from detectron2.utils.logger import setup_logger
@@ -67,6 +66,7 @@ def get_parser():
     )
     return parser
 
+
 if __name__ == "__main__":
     mp.set_start_method("spawn", force=True)
     args = get_parser().parse_args()
@@ -85,7 +85,6 @@ if __name__ == "__main__":
         for path in tqdm.tqdm(args.input, disable=not args.output):
             # use PIL, to be consistent with evaluation
             img = read_image(path, format="BGR")
-
             start_time = time.time()
             cimage = {}
             cimage["imagePath"] = path

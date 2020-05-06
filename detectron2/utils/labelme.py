@@ -1,6 +1,6 @@
 import io
 import json
-import numpy as np
+import math
 import os
 import os.path as osp
 import PIL.Image
@@ -30,12 +30,28 @@ class LabelMe(object):
         points = polygons[0].reshape(int(length / 2), 2)
         shape = {}
         shape["label"] = label
-        shape["points"] = points.tolist()
+        shape["points"] = self.shortPoints(points.tolist())
         shape["group_id"] = None
         shape["shape_type"] = "polygon"
         shape["flags"] = {}
 
         return shape
+
+    def shortPoints(self, points):
+        newPoints = []
+        newPoints.append(points[0])
+        pointslen = len(points)
+
+        keepPointIndex = 0;
+        for i in range(1, pointslen):
+            dx = math.fabs(float(points[i][0]) - float(points[keepPointIndex][0]))
+            dy = math.fabs(float(points[i][1]) - float(points[keepPointIndex][1]))
+
+            if dx > 2.0 or dy > 2.0:
+                keepPointIndex = i
+                newPoints.append(points[keepPointIndex])
+
+        return newPoints
 
     def data2labelme(self):
         data_labelme = {}
