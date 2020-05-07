@@ -1,3 +1,4 @@
+import base64
 import io
 import json
 from labelme.label_file import LabelFile
@@ -22,7 +23,6 @@ class LabelMe(object):
         self.file_name = file_name
         self.save_json_path = save_json_path
         self.shapes = []
-        self.labelFile = LabelFile(file_name)
 
     def add_shape(self, shape):
         self.shapes.append(shape)
@@ -62,8 +62,8 @@ class LabelMe(object):
         data_labelme["flags"] = {}
         data_labelme["shapes"] = self.shapes
         data_labelme["imagePath"] = os.path.basename(self.file_name)
-        data_labelme["imageData"] = None
-        data_labelme["imageData"] = self.labelFile.imageData
+        #data_labelme["imageData"] = None
+        data_labelme["imageData"] = base64.b64encode(LabelFile.load_image_file(self.file_name)).decode('utf-8')
         return data_labelme
 
     def save_json(self):
