@@ -1,5 +1,6 @@
 import io
 import json
+from labelme.label_file import LabelFile
 import math
 import os
 import os.path as osp
@@ -21,6 +22,7 @@ class LabelMe(object):
         self.file_name = file_name
         self.save_json_path = save_json_path
         self.shapes = []
+        self.labelFile = LabelFile(file_name)
 
     def add_shape(self, shape):
         self.shapes.append(shape)
@@ -30,7 +32,8 @@ class LabelMe(object):
         points = polygons[0].reshape(int(length / 2), 2)
         shape = {}
         shape["label"] = label
-        shape["points"] = self.shortPoints(points.tolist())
+        #shape["points"] = self.shortPoints(points.tolist())
+        shape["points"] = points.tolist()
         shape["group_id"] = None
         shape["shape_type"] = "polygon"
         shape["flags"] = {}
@@ -60,7 +63,7 @@ class LabelMe(object):
         data_labelme["shapes"] = self.shapes
         data_labelme["imagePath"] = os.path.basename(self.file_name)
         data_labelme["imageData"] = None
-        #data_labelme["imageData"] = self.load_image_file(self.file_name)
+        data_labelme["imageData"] = self.labelFile.imageData
         return data_labelme
 
     def save_json(self):
