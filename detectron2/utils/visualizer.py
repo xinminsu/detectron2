@@ -2304,7 +2304,7 @@ class Visualizer3:
             if masks is not None:
                 labelsp = labels[i].split()
                 label = '_'.join(labelsp[:-1])
-                if len(masks[i].polygons[0]) > 20:
+                if len(masks[i].polygons[0]) > 40:
                     self.labelme.add_shape(self.labelme.shape(masks[i].polygons, label))
                 for segment in masks[i].polygons:
                     self.draw_polygon(segment.reshape(-1, 2), color, alpha=alpha)
